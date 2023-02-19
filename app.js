@@ -535,9 +535,29 @@ app.post('/ordenes',permisosAdmin, async (req,res) =>{
         } catch(err){
             console.log("Error Consultar Servicio: "+err.message);
         }
+
+        // Buscar foto de perfil
+        var consultaFoto='SELECT "Foto_perfil" FROM "Usuarios" WHERE "Email"=$1'
+        const parametros16=[email];
+        var respuestaFotoPerfil;
+
+        try{
+          respuestaFotoPerfil = await conexion.query(consultaFoto,parametros16);
+        } catch(err){
+            console.log("Error consulta: "+err.message);
+        }
+        var fotoPerfil;
+        try{
+          fotoPerfil=respuestaFotoPerfil.rows[0];
+        }catch(err){
+          console.log("Error consulta: "+err.message);
+          fotoPerfil=null;
+        }
+
+
         var servicioEscogido=respuestaServicio.rows[0];
         var orden=respuestaPedido.rows[0]|| null;
-        res.render('successful',{rolAdmin:rolAdmin, saldo:saldo, orden:orden, servicioEscogido:servicioEscogido})
+        res.render('successful',{rolAdmin:rolAdmin, saldo:saldo, orden:orden, servicioEscogido:servicioEscogido, fotoPerfil:fotoPerfil})
       }
       
     } catch(err){
