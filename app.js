@@ -89,8 +89,9 @@ app.get('/', async (req,res) => {
     fotoPerfil=null;
 }
 
+  var fondo = 'perfil-estandar.jpg'
 
-    res.render('index',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil})
+    res.render('index',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil, fondo:fondo})
 })
 
 // Contacto
@@ -105,6 +106,8 @@ app.get("/login",prevenirLogin, async function (req,res){
   var nouser=true;
    // msg si viene de restauracion contraseña
    var msg=false;
+   
+   //ruta
     res.render('login',{rolAdmin:rolAdmin, nouser:nouser, msg:msg})
   })
 
