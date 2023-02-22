@@ -88,8 +88,8 @@ app.get('/', async (req,res) => {
     console.log("Error consulta: "+err.message);
     fotoPerfil=null;
 }
+var fondo ='contacto/IMAGEN FONDO.png'
 
-  var fondo = 'perfil-estandar.jpg'
 
     res.render('index',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil, fondo:fondo})
 })
@@ -97,18 +97,21 @@ app.get('/', async (req,res) => {
 // Contacto
 app.get('/contacto', (req,res) => {
   var rolAdmin=req.headers.cookie || false ;
-    res.render('contacto',{rolAdmin:rolAdmin})
+
+  var fondo ='contacto/IMAGEN FONDO.png'
+    res.render('contacto',{rolAdmin:rolAdmin, fondo:fondo})
 })
 
 // Login
 app.get("/login",prevenirLogin, async function (req,res){
   var rolAdmin=req.headers.cookie || false ;
   var nouser=true;
+  var fondo ='inicio/IMAGEN INICIO FONDO.png'
    // msg si viene de restauracion contraseña
    var msg=false;
    
    //ruta
-    res.render('login',{rolAdmin:rolAdmin, nouser:nouser, msg:msg})
+    res.render('login',{rolAdmin:rolAdmin, nouser:nouser, msg:msg , fondo:fondo})
   })
 
 app.post("/login", async function (req,res){
@@ -130,7 +133,9 @@ app.post("/login", async function (req,res){
     if(respuestaAdmin.rows[0]==undefined){
       var rolAdmin=req.headers.cookie || false ;
       var nouser=false;
-      res.render('login',{rolAdmin:rolAdmin, nouser:nouser})
+      var fondo ='inicio/IMAGEN INICIO FONDO.png';
+
+      res.render('login',{rolAdmin:rolAdmin, nouser:nouser, fondo:fondo})
       
     }else{
       const token = await jwt.generarToken(usuario);
@@ -145,7 +150,8 @@ app.get('/register',prevenirLogin, (req,res) => {
   var user=req.headers.cookie || false ;
   var existe=false;
   var codigoExiste=true;
-  res.render('register',{user:user, existe,codigoExiste:codigoExiste})
+  var fondo= 'inicio/IMAGEN INICIO FONDO.png'
+  res.render('register',{user:user, existe,codigoExiste:codigoExiste, fondo:fondo})
 })
 
 app.post("/register", async function (req,res){
@@ -166,7 +172,9 @@ app.post("/register", async function (req,res){
       existe= true;
       var user=req.headers.cookie || false ;
       var codigoExiste=true;
-      res.render('register',{user:user, existe:existe, codigoExiste:codigoExiste })
+      var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+      res.render('register',{user:user, existe:existe, codigoExiste:codigoExiste, fondo:fondo})
     }
   }catch(err){
     console.log("Error consulta: "+err.message);
@@ -203,7 +211,9 @@ app.post("/register", async function (req,res){
   }catch(err){
     console.log("Error consulta: "+err.message);
     codigoExiste=false;
-    res.render('register',{user:user, existe:existe, codigoExiste:codigoExiste})
+    var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+    res.render('register',{user:user, existe:existe, codigoExiste:codigoExiste, fondo:fondo})
 
     
   }  
@@ -218,7 +228,9 @@ app.post("/register", async function (req,res){
         console.log("Error consulta: "+err.message);
         var user=req.headers.cookie || false ;
         var existe=false;
-        res.render('register',{user:user, existe})
+        var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+        res.render('register',{user:user, existe, fondo:fondo})
     }
 
     // Añadir codigo a usuario
@@ -233,16 +245,19 @@ app.post("/register", async function (req,res){
 
     var rolAdmin=req.headers.cookie || false ;
     var nouser=true;
-    // msg si viene de restauracion contraseña
+    var fondo ='inicio/IMAGEN INICIO FONDO.png'
+  // msg si viene de restauracion contraseña
     var msg=false;
-    res.render('login',{rolAdmin:rolAdmin, nouser:nouser, msg:msg})
+
+    res.render('login',{rolAdmin:rolAdmin, nouser:nouser, msg:msg, fondo:fondo})
   })
 
   // Restaurar contraseña
   app.get('/resetpassword', async (req,res) => {
     var rolAdmin=req.headers.cookie || false ;
     var mensaje = false;
-    res.render('restorePass',{rolAdmin:rolAdmin, mensaje:mensaje})
+    var fondo= 'inicio/IMAGEN INICIO FONDO.png'
+    res.render('restorePass',{rolAdmin:rolAdmin, mensaje:mensaje, fondo:fondo})
 })
 
 
@@ -290,7 +305,9 @@ app.post('/resetpassword', async (req,res) => {
   var rolAdmin=req.headers.cookie || false ;
   var correo=req.body.email
   var mensaje=false;
-  res.render('restoreCode',{rolAdmin:rolAdmin, correo:correo, mensaje:mensaje})
+  var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+  res.render('restoreCode',{rolAdmin:rolAdmin, correo:correo, mensaje:mensaje, fondo:fondo})
 })
 
 
@@ -298,7 +315,8 @@ app.post('/resetpassword', async (req,res) => {
 app.get('/restoreCode', async (req,res) => {
   var rolAdmin=req.headers.cookie || false ;
   var mensaje=false;
-  res.render('restoreCode',{rolAdmin:rolAdmin, mensaje:mensaje})
+  var fondo = 'inicio/IMAGEN INICIO FONDO.png'
+  res.render('restoreCode',{rolAdmin:rolAdmin, mensaje:mensaje, fondo:fondo})
 })
 
 app.post('/restoreCode', async (req,res) => {
@@ -318,12 +336,16 @@ app.post('/restoreCode', async (req,res) => {
   if(respuestaPass.rows[0]==undefined){
     var rolAdmin=req.headers.cookie || false ;
     var mensaje=true;
-    res.render('restoreCode',{rolAdmin:rolAdmin, mensaje:mensaje})
+    var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+    res.render('restoreCode',{rolAdmin:rolAdmin, mensaje:mensaje, fondo:fondo})
     
   }else{
     
     var correo=req.body.email;
-    res.render('passwordNew',{rolAdmin:rolAdmin, correo:correo})
+    var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+    res.render('passwordNew',{rolAdmin:rolAdmin, correo:correo, fondo:fondo})
 
   }
 })
@@ -343,7 +365,9 @@ app.post('/passwordNew', async (req,res) => {
     var rolAdmin=req.headers.cookie || false ;
     var nouser=true;
     var msg=true;
-    res.render('login',{rolAdmin:rolAdmin, nouser:nouser, msg:msg})
+    var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+    res.render('login',{rolAdmin:rolAdmin, nouser:nouser, msg:msg, fondo:fondo})
 
 })
 
@@ -420,7 +444,8 @@ app.get('/ordenes',permisosAdmin, async (req,res) => {
 
   }
 
-  res.render('ordenes',{rolAdmin:rolAdmin, saldo:saldo, servicios:servicios, categorias:categorias, fotoPerfil:fotoPerfil})
+  var fondo= 'ordenes/fondo.jpg'
+  res.render('ordenes',{rolAdmin:rolAdmin, saldo:saldo, servicios:servicios, categorias:categorias, fotoPerfil:fotoPerfil, fondo:fondo})
 })
 
 // Procesar pedido
@@ -560,7 +585,23 @@ app.post('/ordenes',permisosAdmin, async (req,res) =>{
 
         var servicioEscogido=respuestaServicio.rows[0];
         var orden=respuestaPedido.rows[0]|| null;
-        res.render('successful',{rolAdmin:rolAdmin, saldo:saldo, orden:orden, servicioEscogido:servicioEscogido, fotoPerfil:fotoPerfil})
+        var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+          // Quitar decimales a saldo
+        var saldoFinal=''
+        var primerPunto=false;
+        for (i =0; i <= saldo.length ; i++) { 
+                                      
+          if(saldo[i]=='.'){
+            primerPunto=true;
+          }
+          if(primerPunto==false){
+            saldoFinal+=saldo[i];
+          }
+        }
+        saldo=saldoFinal
+
+        res.render('successful',{rolAdmin:rolAdmin, saldo:saldo, orden:orden, servicioEscogido:servicioEscogido, fotoPerfil:fotoPerfil, fondo:fondo})
       }
       
     } catch(err){
@@ -568,7 +609,8 @@ app.post('/ordenes',permisosAdmin, async (req,res) =>{
     }
     
   }else{
-    res.render('declined',{rolAdmin:rolAdmin, saldo:saldo})
+
+    res.render('declined',{rolAdmin:rolAdmin, saldo:saldo, fondo:fondo})
 
   }
 
@@ -633,7 +675,9 @@ app.get('/mispedidos', async (req,res) => {
      fotoPerfil=null;
   
     }
-  res.render('pedidos',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil})
+  var fondo ='mispedidos/FONDO MIS PEDIDOS.jpg'
+
+  res.render('pedidos',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil, fondo:fondo})
 })
 
 // Actualizar foto perfil
@@ -724,8 +768,10 @@ try{
   fotoPerfil=null;
 }
 
+var fondo ='inicio/IMAGEN INICIO FONDO.png'
 
-  res.render('buy',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil})
+
+  res.render('buy',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil, fondo:fondo})
 
 })
 
@@ -789,7 +835,10 @@ app.get('/ayuda', async (req,res) => {
     fotoPerfil=null;
 }
 
-  res.render('ayuda',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil})
+  var fondo ='inicio/IMAGEN INICIO FONDO.png'
+
+
+  res.render('ayuda',{rolAdmin:rolAdmin, saldo:saldo, fotoPerfil:fotoPerfil, fondo:fondo})
 })
 
 
