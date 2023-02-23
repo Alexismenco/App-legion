@@ -43,6 +43,7 @@ app.get('/', async (req,res) => {
     respuestaSaldo = await conexion.query(consultaSaldo,parametros6);
   } catch(err){
       console.log("Error consulta: "+err.message);
+      respuestaSaldo=undefined
   }
   var saldo;
 
